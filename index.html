@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K2 Business - Eventos Presenciais e Online</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Montserrat', sans-serif; }
+        .loader-bar { animation: loadProgress 2s ease-in-out forwards; }
+        @keyframes loadProgress { from { width: 0%; } to { width: 100%; } }
+        .fade-in { animation: fadeIn 0.8s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .slide-up { animation: slideUp 0.8s ease-out forwards; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .slide-left { animation: slideLeft 0.8s ease-out forwards; }
+        @keyframes slideLeft { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
+        .slide-right { animation: slideRight 0.8s ease-out forwards; }
+        @keyframes slideRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+        .video-container { aspect-ratio: 9/16; }
+        .play-button { transition: all 0.3s ease; }
+        .play-button:hover { transform: scale(1.1); }
+        .play-button.hidden { opacity: 0; transform: scale(0.8); pointer-events: none; }
+        .social-icon { transition: all 0.3s ease; }
+        .social-icon:hover { transform: scale(1.1); color: #d4af5d; }
+        .element { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .element.show { opacity: 1; transform: translateY(0); }
+        .element.slide-left { transform: translateX(-50px); }
+        .element.slide-left.show { transform: translateX(0); }
+        .element.slide-right { transform: translateX(50px); }
+        .element.slide-right.show { transform: translateX(0); }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-800 to-slate-900">
+    <!-- Loader -->
+    <div id="loader" class="min-h-screen bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center">
+        <div class="text-center">
+            <div class="mb-8 fade-in">
+                <div class="w-24 h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 mx-auto">
+                    <img src="assets/k2-logo.png" alt="K2 Business Logo" class="w-full h-full object-contain">
+                </div>
+            </div>
+            <div class="h-1 bg-gradient-to-r from-[#d4af5d] to-[#E6C875] rounded-full mx-auto max-w-xs loader-bar"></div>
+            <p class="text-white/60 mt-4 fade-in">Carregando...</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content" class="min-h-screen bg-gradient-to-br from-slate-800 to-slate-900 hidden">
+        <!-- Mobile Layout -->
+        <div class="lg:hidden flex flex-col min-h-screen">
+            <div class="flex-1 flex flex-col justify-center px-6 py-8">
+                <!-- Logo Mobile -->
+                <div id="mobile-logo" class="element flex justify-center mb-6">
+                    <div class="w-24 h-24 md:w-28 md:h-28">
+                        <img src="assets/k2-logo.png" alt="K2 Business Logo" class="w-full h-full object-contain">
+                    </div>
+                </div>
+
+                <!-- Text Content Mobile -->
+                <div id="mobile-text" class="element text-center mb-8">
+                    <h1 class="text-4xl md:text-5xl leading-none tracking-tight">
+                        <span class="text-[#d4af5d] block font-extrabold">Eventos</span>
+                        <span class="text-white block font-extrabold">Presenciais</span>
+                        <span class="text-white block font-extrabold">e Online</span>
+                    </h1>
+                    <div id="mobile-subtitle" class="element mt-4">
+                        <p class="text-[#d4af5d] text-lg md:text-xl">em breve...</p>
+                    </div>
+                </div>
+
+                <!-- Video Player Mobile -->
+                <div id="mobile-video" class="element w-full max-w-sm mx-auto">
+                    <div class="video-container bg-black rounded-2xl overflow-hidden relative group shadow-2xl cursor-pointer" onclick="toggleVideo()">
+                        <div class="absolute inset-0 bg-gradient-to-br from-black/20 to-black/60"></div>
+                        <video id="video-player" class="w-full h-full object-cover hidden" preload="metadata" playsInline>
+                            <source src="assets/video.mp4" type="video/mp4">
+                        </video>
+                        <div id="play-button" class="play-button absolute inset-0 flex items-center justify-center">
+                            <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-2xl">
+                                <svg class="w-7 h-7 text-[#d4af5d] ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Mobile -->
+            <footer id="mobile-footer" class="element pb-6 px-6">
+                <div class="flex justify-center gap-6 mb-3">
+                    <a href=" https://api.whatsapp.com/send/?phone=5513988241825&text&type=phone_number&app_absent=0" class="social-icon text-white">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.51 3.488"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.instagram.com/k2business" class="social-icon text-white">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.40z"/>
+                        </svg>
+                    </a>
+                </div>
+                <p class="text-white/40 text-xs text-center">© Copyright 2025 K2 Business. Todos os direitos reservados.</p>
+            </footer>
+        </div>
+
+        <!-- Desktop Layout -->
+        <div class="hidden lg:flex lg:items-center lg:justify-center lg:min-h-screen lg:px-12 xl:px-16">
+            <div class="max-w-7xl w-full">
+                <div class="grid grid-cols-2 gap-16 xl:gap-24 items-center">
+                    <!-- Left Column -->
+                    <div class="flex flex-col items-start text-left space-y-8">
+                        <!-- Logo Desktop -->
+                        <div id="desktop-logo" class="element slide-left">
+                            <div class="w-32 h-32 xl:w-40 xl:h-40">
+                                <img src="assets/k2-logo.png" alt="K2 Business Logo" class="w-full h-full object-contain">
+                            </div>
+                        </div>
+
+                        <!-- Text Content Desktop -->
+                        <div id="desktop-text" class="element slide-left">
+                            <h1 class="text-6xl xl:text-7xl 2xl:text-8xl leading-none tracking-tight">
+                                <span class="text-[#d4af5d] block font-extrabold">Eventos</span>
+                                <span class="text-white block font-extrabold">Presenciais</span>
+                                <span class="text-white block font-extrabold">e Online</span>
+                            </h1>
+                            <div id="desktop-subtitle" class="element mt-6 xl:mt-8">
+                                <p class="text-[#d4af5d] text-2xl xl:text-3xl">em breve...</p>
+                            </div>
+                        </div>
+
+                        <!-- Social Icons Desktop -->
+                        <div id="desktop-social" class="element slide-left flex gap-8">
+                            <a href="https://api.whatsapp.com/send/?phone=5513988241825&text&type=phone_number&app_absent=0 " class="social-icon text-white">
+                                <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.51 3.488"/>
+                                </svg>
+                            </a>
+                            <a href="https://www.instagram.com/k2business" class="social-icon text-white">
+                                <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.40z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right Column - Video Desktop -->
+                    <div id="desktop-video" class="element slide-right flex justify-center lg:justify-end">
+                        <div class="w-full max-w-md xl:max-w-lg">
+                            <div class="video-container bg-black rounded-2xl lg:rounded-3xl overflow-hidden relative group shadow-2xl cursor-pointer" onclick="toggleVideo()">
+                                <div class="absolute inset-0 bg-gradient-to-br from-black/20 to-black/60"></div>
+                                <video id="desktop-video-player" class="w-full h-full object-cover hidden" preload="metadata" playsInline>
+                                    <source src="assets/video.mp4" type="video/mp4">
+                                </video>
+                                <div id="desktop-play-button" class="play-button absolute inset-0 flex items-center justify-center">
+                                    <div class="w-20 h-20 xl:w-24 xl:h-24 bg-white rounded-full flex items-center justify-center shadow-2xl">
+                                        <svg class="w-9 h-9 xl:w-11 xl:h-11 text-[#d4af5d] ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isPlaying = false;
+
+        // Initialize
+        setTimeout(() => {
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            
+            setTimeout(() => {
+                document.querySelectorAll('.element').forEach((el, index) => {
+                    setTimeout(() => el.classList.add('show'), index * 300);
+                });
+            }, 200);
+        }, 2500);
+
+        // Video toggle function
+        function toggleVideo() {
+            const mobileVideo = document.getElementById('video-player');
+            const desktopVideo = document.getElementById('desktop-video-player');
+            const mobilePlayBtn = document.getElementById('play-button');
+            const desktopPlayBtn = document.getElementById('desktop-play-button');
+            
+            const activeVideo = window.innerWidth >= 1024 ? desktopVideo : mobileVideo;
+            const activePlayBtn = window.innerWidth >= 1024 ? desktopPlayBtn : mobilePlayBtn;
+            
+            if (isPlaying) {
+                activeVideo.pause();
+                activePlayBtn.classList.remove('hidden');
+                isPlaying = false;
+            } else {
+                activeVideo.style.display = 'block';
+                activeVideo.play();
+                activePlayBtn.classList.add('hidden');
+                isPlaying = true;
+            }
+            
+            activeVideo.onended = () => {
+                activePlayBtn.classList.remove('hidden');
+                isPlaying = false;
+            };
+        }
+    </script>
+</body>
+</html>
